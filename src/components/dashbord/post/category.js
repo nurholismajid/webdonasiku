@@ -107,6 +107,9 @@ class category extends Component {
             }
           })
       }
+
+     
+
       deletedata(id) {
         swal({
           title: "Anda yakin?",
@@ -173,8 +176,9 @@ class category extends Component {
        }
 
        
-        const loopdata = datacategory.map(category=>{
-            return({
+        const loopdata = datacategory.map(category=>{  
+          
+          return({
                 id : category.id_category,
                 nama : category.name_category,
                 slug : category.slug,

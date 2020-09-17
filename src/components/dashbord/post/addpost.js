@@ -21,16 +21,37 @@ class about extends Component {
             login = false;
         }
         this.state = {
-            sliders :[],
-            search:'',
-            login,
-        }  
-        
+          login,
+          idcategory:"",
+          idpenerima:"",
+          password:"",
+          slug:"",
+          title:"",
+          headline:"",
+          content:"",
+          iduser: sessionStorage.getItem('nama'),
+          foto: "",
+          typefile:"",
+          categorys:[],
+          
+      }  
      
       }
       
+      async componentDidMount() {
+        await Api.get('category')
+        .then(res => {
+          const categorys = res.data['data'];
+          this.setState({ categorys });
+        })
+      }
       
-    
+      handleChange = (e) =>{
+        this.setState({
+            [e.target.name]: e.target.value,
+            slug: this.state.title.toLowerCase().split(' ').join('-')
+        })
+    }
      
     
       onEditorStateChange = (editorState) => {
@@ -42,11 +63,6 @@ class about extends Component {
       };
 
 
-    updatefilter(event){
-        this.setState({
-            search: event.target.value.substr(0,20)
-        })
-    }
 
     funswal = (status,pesan,style)=>{
       swal(status,pesan, style);
@@ -56,31 +72,59 @@ class about extends Component {
       const Datacontent ={
         content: this.state.content,
       }
-      console.log(Datacontent)
-   Api.put('content/update/About',Datacontent)
-      .then(res => {
-        if(res.data.status =="success"){
-            this.funswal(res.data.status,res.data.message,"success");
-        }else{
-            this.funswal(res.data.status, res.data.message, "warning");
-        }
-      })   
+   console.log(Datacontent)
+  // Api.put('content/update/About',Datacontent)
+    //  .then(res => {
+      //  if(res.data.status =="success"){
+     //       this.funswal(res.data.status,res.data.message,"success");
+   //     }else{
+       //     this.funswal(res.data.status, res.data.message, "warning");
+//        }
+  //    })   
       
   }
 
     
+  handleImageChange = (e) => {
+    e.preventDefault();
+    var file = e.target.files[0];
+    var Typefile = file.type
+    var reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onloadend = () => {
+        if(Typefile == "image/jpeg"){
+            var base64Data = reader.result;
+            var Foto = base64Data.replace(/^data:image\/jpeg;base64,/, "");
+            var type = ".jpg";
+        }else if(Typefile == "image/png"){
+            var base64Data = reader.result;
+            var Foto = base64Data.replace(/^data:image\/png;base64,/, "");
+            var type = ".png";
+        }
+        this.setState({
+            foto: Foto,
+            typefile: type
+          });
 
-      
+    };
+  }
 
       
 
     render() {
 
-        const { editorState } = this.state;
+        const { editorState, slug } = this.state;
+        
         if (this.state.login === false) {
             return <Redirect to="/admin/login" />
         }
-            
+        
+        const loopcategory = this.state.categorys.map(category=>{  
+          
+        return(
+        <option value={category.id_category}>{category.name_category}</option>
+        )
+        })
         return (
             <div>
             <Navbar/>
@@ -98,13 +142,13 @@ class about extends Component {
                         <form className="form-horizontal popup-validation">
                         <div className="form-group">
                                             <div className="col-lg-12">
-                                                <input name="nama" placeholder="Titile Post" type="text" onChange={this.handleChange} className="validate[required] form-control" id="nama"/>
+                                                <input name="title" placeholder="Titile Post" type="text" onChange={this.handleChange} className="validate[required] form-control" id="title"/>
                                             </div>
                                         </div>
 
                                         <div className="form-group">
                                             <div className="col-lg-12">
-                                                <input name="slug" disabled="true" placeholder="Titile Post" type="text" onChange={this.handleChange} className="validate[required] form-control" id="slug"/>
+                                                <input name="slug" value={slug} disabled="true" type="text" onChange={this.handleChange} className="validate[required] form-control" id="slug"/>
                                             </div>
                                         
                                         </div>
@@ -128,9 +172,6 @@ class about extends Component {
                           </div>
                         </div>               
                         
-                            <div style={{textAlign:"center"}} className="form-actions no-margin-bottom">
-                                <button onClick={this.handleSubmit} type="button" className="btn btn-primary ">Submit</button>
-                            </div>
                         </form>
                            
                         </div>
@@ -145,7 +186,47 @@ class about extends Component {
                             Additional
                         </div>
                         <div className="panel-body">
-                            
+                        <div style={{textAlign:"center"}} className="form-actions no-margin-bottom">
+                                <button onClick={this.handleSubmit} type="button" className="btn btn-primary ">Post</button>
+                                <Link style={{marginLeft:"10px"}} className="btn btn-warning" to="/admin/post" >
+                                Kembali
+                                </Link>
+                            </div>
+                                        <div className="form-group">
+                                        <label class="control-label col-lg-12">Category Post</label>
+                                            <div className="col-lg-12">
+                                                <select onChange={this.handleChange} name="category" id="category" className="validate[required] form-control">
+                                                    <option value="">Select Category</option>
+                                                    {loopcategory}
+                                                    
+                                                </select>
+                                            </div>
+                                        
+                                        </div>
+                                        <div className="form-group">
+                                        <label class="control-label col-lg-12">Terkait Penerima Donasi</label>
+                                            <div className="col-lg-12">
+                                                <select onChange={this.handleChange} name="category" id="category" className="validate[required] form-control">
+                                                    <option value="">Select Penerima</option>
+                                                    <option value="option1">Tennis</option>
+                                                    <option value="option2">Football</option>
+                                                    <option value="option3">Golf</option>
+                                                </select>
+                                            </div>
+                                        
+                                        </div>
+                                        <div className="form-group">
+                        <label className="control-label col-lg-12">Thumbnail</label>
+                        <div className="col-lg-12">
+                            <div className="fileupload fileupload-new" data-provides="fileupload">
+                                <div className="fileupload-preview thumbnail" style={{width: "200px", height: "150px"}}></div>
+                                <div>
+                                    <span className="btn btn-file btn-success"><span className="fileupload-new">Select image</span><span className="fileupload-exists">Change</span><input className="validate[required]" type="file" onChange={this.handleImageChange.bind(this)} /></span>
+                                    <a href="#" className="btn btn-danger fileupload-exists" data-dismiss="fileupload">Remove</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                            
                         </div>
                     </div> 
