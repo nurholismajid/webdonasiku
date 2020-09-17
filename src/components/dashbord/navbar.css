@@ -1,0 +1,88 @@
+.media.user-media.well-small img {
+    max-width: 40%;
+}
+ul.nav.navbar-top-links.navbar-right li {
+    float: right;
+}
+
+a#menu-toggle {
+    float: left;
+    margin-top: 10px;
+}
+
+a.navbar-brand img {
+    vertical-align: unset;
+    max-width: 145px;
+}
+
+#top .navbar {
+    margin-bottom: 0;
+    border: 1px solid #dfe1e5;
+    background-color: #fff;
+    box-shadow: 1px 2px #dfe1e5;
+    padding: 5px 5px;
+}
+
+.panel {
+    background-color: #fff !important;
+    box-shadow: 1px 2px #dfe1e5;
+    padding: 5px 5px;
+}
+
+.panel-default > .panel-heading {
+    color: #000000;
+    background-color: #fff !important;
+    box-shadow: 1px 2px #dfe1e5;
+    padding:10px;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+#menu > li > a, #menu > li > ul > li > a {
+    color: #000000;
+    font-size: 12px;
+}
+
+
+
+.dropdown-menu.dropdown-user li {
+    min-width: 100%;
+}
+
+#menu > li :hover {
+    background: #ca0600 !important ;
+    color: #fff;
+}
+
+
+ul.nav.navbar-top-links.navbar-right li :hover {
+    background:#fff;
+}
+ul.nav.navbar-top-links.navbar-right li > a {
+    color: #000000;
+
+}
+
+.inner {
+    min-height:auto;
+  }
+
+  #menu-toggle {
+    background: #ca0600;
+}
+
+form.form-horizontal.popup-validation {
+    padding: 0px !important;
+}
+
+.gbbhfF div:first-child {
+    white-space: unset !important;
+    overflow: unset !important;
+    text-overflow: unset !important;
+    width: 150px !important;
+    
+}
+
+nav.sc-fzoNJl.dGqwdB.rdt_Pagination {
+    border-top: unset;
+}

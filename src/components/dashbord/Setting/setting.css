@@ -1,0 +1,31 @@
+header.sc-fzqNJr.kwRiGp.rdt_TableHeader {
+    display: none;
+}
+
+.sc-fznxsB.forRdO {
+    border: 1px solid #cccccc;
+}
+
+a.btn-tambah, a.btn-tambah:hover {
+    text-decoration: unset;
+    font-size: 25px;
+    padding-left: 10px;
+}
+
+a.btn-edit {
+    color: #5cb85c;
+    text-decoration: unset;
+    font-size: 25px;
+    margin-right: 20px;
+}
+
+a.btn-delete {
+    color: #d9534f;
+    text-decoration: unset;
+    font-size: 25px;
+    padding-right: 10px;
+}
+
+form.form-horizontal.popup-validation {
+    padding: 10px 135px;
+}
