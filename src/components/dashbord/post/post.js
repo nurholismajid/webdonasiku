@@ -130,11 +130,12 @@ class post extends Component {
                 category : post.name_category,
                 penerima : post.nama_penerima,
                 title :post.title,
+                slug :post.slug,
                 date :post.create_at.substr(0,10),
                 autor :post.nama_user,
                 publish :[<button onClick={()=>this.publish(post.id_post,"publish")} style={hidepublish} className="btn btn-success">Publish</button>,<button onClick={()=>this.publish(post.id_post,"draf")} style={hideunpublish} className="btn btn-danger">Batal Publish</button>],
                 thumbnail : <img width="100px" style={{margin :"auto", padding:"20px"}} src={post.thumbnail} />,
-                action : [<Link target="_blank" style={hideunpublish} to={"/post/"+ post.slug } className="btn-edit"><i className="icon-desktop"></i></Link >,<Link to={"/admin/post/edit/"+ post.id_post } className="btn-edit"><i className="icon-edit"></i></Link >,<a href="#" onClick={()=>this.deletedata(post.id_post)} className="btn-delete"><i className="icon-trash"></i></a>] })
+                action : [<Link target="_blank" style={hideunpublish} to={"/post/"+ post.slug } className="btn-edit"><i className="icon-desktop"></i></Link >,<Link to={"/admin/post/edit/"+ post.slug } className="btn-edit"><i className="icon-edit"></i></Link >,<a href="#" onClick={()=>this.deletedata(post.id_post)} className="btn-delete"><i className="icon-trash"></i></a>] })
         })
      
         const data = loopdata;
@@ -147,6 +148,11 @@ class post extends Component {
             {
               name: 'Title Post',
               selector: 'title',
+              sortable: true,
+            },
+            {
+              name: 'Slug',
+              selector: 'slug',
               sortable: true,
             },
             {

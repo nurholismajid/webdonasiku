@@ -29,9 +29,10 @@ class about extends Component {
           title:"",
           headline:"",
           content:"",
-          iduser: sessionStorage.getItem('nama'),
+          iduser: sessionStorage.getItem('id'),
           foto: "",
           typefile:"",
+          penerimas:[],
           categorys:[],
           
       }  
@@ -43,6 +44,11 @@ class about extends Component {
         .then(res => {
           const categorys = res.data['data'];
           this.setState({ categorys });
+        })
+        await Api.get('api/penerima')
+        .then(res => {
+          const penerimas = res.data['data'];
+          this.setState({ penerimas });
         })
       }
       
@@ -70,17 +76,24 @@ class about extends Component {
 
     handleSubmit = (e) => {
       const Datacontent ={
+        idcategory:this.state.idcategory,
+        idpenerima:this.state.idpenerima,
+        slug:this.state.slug,
+        title:this.state.title,
+        headline:this.state.headline,
         content: this.state.content,
+        iduser:this.state.iduser,
+        foto:this.state.foto,
+        typefile:this.state.typefile
       }
-   console.log(Datacontent)
-  // Api.put('content/update/About',Datacontent)
-    //  .then(res => {
-      //  if(res.data.status =="success"){
-     //       this.funswal(res.data.status,res.data.message,"success");
-   //     }else{
-       //     this.funswal(res.data.status, res.data.message, "warning");
-//        }
-  //    })   
+   Api.post('post/create',Datacontent)
+      .then(res => {
+        if(res.data.status =="success"){
+            this.funswal(res.data.status,res.data.message,"success");
+        }else{
+            this.funswal(res.data.status, res.data.message, "warning");
+        }
+      })   
       
   }
 
@@ -125,6 +138,14 @@ class about extends Component {
         <option value={category.id_category}>{category.name_category}</option>
         )
         })
+
+        const looppenerima = this.state.penerimas.map(penerima=>{  
+          
+            return(
+            <option value={penerima.id_penerima}>{penerima.nama_penerima}</option>
+            )
+            })
+
         return (
             <div>
             <Navbar/>
@@ -148,7 +169,7 @@ class about extends Component {
 
                                         <div className="form-group">
                                             <div className="col-lg-12">
-                                                <input name="slug" value={slug} disabled="true" type="text" onChange={this.handleChange} className="validate[required] form-control" id="slug"/>
+                                                <input name="slug" value={slug} disabled="true" type="text" className="validate[required] form-control" id="slug"/>
                                             </div>
                                         
                                         </div>
@@ -193,9 +214,9 @@ class about extends Component {
                                 </Link>
                             </div>
                                         <div className="form-group">
-                                        <label class="control-label col-lg-12">Category Post</label>
+                                        <label className="control-label col-lg-12">Category Post</label>
                                             <div className="col-lg-12">
-                                                <select onChange={this.handleChange} name="category" id="category" className="validate[required] form-control">
+                                                <select onChange={this.handleChange} name="idcategory" id="idcategory" className="validate[required] form-control">
                                                     <option value="">Select Category</option>
                                                     {loopcategory}
                                                     
@@ -204,13 +225,11 @@ class about extends Component {
                                         
                                         </div>
                                         <div className="form-group">
-                                        <label class="control-label col-lg-12">Terkait Penerima Donasi</label>
+                                        <label className="control-label col-lg-12">Terkait Penerima Donasi</label>
                                             <div className="col-lg-12">
-                                                <select onChange={this.handleChange} name="category" id="category" className="validate[required] form-control">
+                                                <select onChange={this.handleChange} name="idpenerima" id="idpenerima" className="validate[required] form-control">
                                                     <option value="">Select Penerima</option>
-                                                    <option value="option1">Tennis</option>
-                                                    <option value="option2">Football</option>
-                                                    <option value="option3">Golf</option>
+                                                    {looppenerima}
                                                 </select>
                                             </div>
                                         

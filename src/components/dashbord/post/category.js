@@ -16,6 +16,7 @@ class category extends Component {
         }
         this.state = {
             categorys :[],
+            posts :[],
             search:'',
             login,
             btnupdate:{display:"none"},
@@ -42,6 +43,11 @@ class category extends Component {
         .then(res => {
           const categorys = res.data['data'];
           this.setState({ categorys });
+        })
+        await Api.get('post')
+        .then(res => {
+          const posts = res.data['data'];
+          this.setState({ posts });
         })
       }
       funswal = (status,pesan,style)=>{
@@ -176,12 +182,19 @@ class category extends Component {
        }
 
        
-        const loopdata = datacategory.map(category=>{  
+        const loopdata = datacategory.map(category=>{
+          
+          const countpost = this.state.posts.filter(
+            (datatemp) => {
+                return datatemp.id_category.toLowerCase().indexOf(category.id_category.toLowerCase()) !== -1;
+            }
+          )
           
           return({
                 id : category.id_category,
                 nama : category.name_category,
                 slug : category.slug,
+                post :countpost.length,
                 action : [<a onClick={()=>this.handleedit(category.id_category)} href="#" className="btn-edit"><i className="icon-edit"></i></a >,<a href="#" onClick={()=>this.deletedata(category.id_category)} className="btn-delete"><i className="icon-trash"></i></a>] })
         })
      
@@ -200,6 +213,11 @@ class category extends Component {
             {
                 name: 'Slug',
                 selector: 'slug',
+                sortable: true,
+              },
+              {
+                name: 'Post',
+                selector: 'post',
                 sortable: true,
               },
               {

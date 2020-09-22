@@ -29,6 +29,7 @@ import addsliderabout from '../components/dashbord/page-about/addslider';
 import categorypost from '../components/dashbord/post/category';
 import post from '../components/dashbord/post/post';
 import addpost from '../components/dashbord/post/addpost';
+import editpost from '../components/dashbord/post/editpost';
 
 import Setting from '../components/dashbord/Setting/setting';
 
@@ -64,12 +65,14 @@ function Mainrouter(){
         <Route path="/admin/category"  component={categorypost} />
         <Route path="/admin/post" exact component={post} />
         <Route path="/admin/post/add"  component={addpost} />
+        <Route path="/admin/post/edit/:slug"  component={editpost} />
         
         <Route path="/admin/setting"  component={Setting} />
         <Route path="/admin/page-home" exact  component={pagehome} />
         <Route path="/admin/page-home/addslider"  component={addsliderhome} />
         <Route path="/admin/page-about" exact  component={pageabout} />
         <Route path="/admin/page-about/addslider"  component={addsliderabout} />
+        
         </BrowserRouter>
     )
 }
