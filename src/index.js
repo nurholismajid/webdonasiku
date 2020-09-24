@@ -2,12 +2,32 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
+import {createStore} from 'redux';
+import {Provider} from 'react-redux';
 
+const globalState = {
+  dataoption : []
+}
+
+const rootReducer = (state = globalState, action) => {
+  
+  if(action.type === 'UPDATEOPTION'){
+    return{
+
+      dataoption:action.data
+    } 
+  }
+  
+  return state;
+
+}
+
+const storeRedux = createStore(rootReducer);
 
 ReactDOM.render(
-  <React.StrictMode>
+  <Provider store={storeRedux}>
     <App />
-  </React.StrictMode>,
+    </Provider>,
   document.getElementById('root')
 );
 
