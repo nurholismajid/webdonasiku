@@ -100,13 +100,12 @@ class Settingweb extends Component {
             fotolama: this.state.fotolama
 
           }
-          console.log(Datasetting);
         const id = 1;
         Api.put('option/update/'+id,Datasetting)
           .then(res => {
             if(res.data.status =="success"){
                 this.funswal(res.data.status,res.data.message,"success");
-                window.location.reload();
+                this.componentDidMount();   
             }else{
                 this.funswal(res.data.status, res.data.message, "warning");
             }

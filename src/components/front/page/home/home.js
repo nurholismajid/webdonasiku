@@ -20,7 +20,7 @@ class home extends Component {
             })
           }
     render() {
-        console.log(this.state.sliders);
+       
         return (
             <div>
             <Navbar />
