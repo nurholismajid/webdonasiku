@@ -121,7 +121,7 @@ class addpenerima extends Component {
                                         <div className="form-group">
                                             <label className="control-label col-lg-4">Rincian Kebutuhan</label>
                                             <div className=" col-lg-4">
-                                                <input name="rincianbiaya" onChange={this.handleChange} className="validate[required] form-control" type="number" id="rincianbiaya" />
+                                                <textarea name="rincianbiaya" onChange={this.handleChange} className="validate[required] form-control"  id="rincianbiaya" />
                                             </div>
                                         </div>
                                         

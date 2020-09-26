@@ -205,7 +205,7 @@ class donasi extends Component {
                             </div> 
         <br />
         <p className="biaya"><b>Total dana masuk : {"Rp. "+priceSplitter(danamasuk)+",00"}</b></p>
-        <p className="biaya"><b>Total dana masuk : {"Rp. "+priceSplitter(danadisalurkan)+",00"}</b></p>                  
+        <p className="biaya"><b>Total dana disalurkan : {"Rp. "+priceSplitter(danadisalurkan)+",00"}</b></p>                  
                         </div>
                     </div> 
 

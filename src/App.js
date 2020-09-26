@@ -11,8 +11,8 @@ class App extends Component  {
   
   }
 
-  componentDidMount() {
-  Api.get('option')
+  async componentDidMount() {
+    await Api.get('option')
   .then(res => {
     const optios = res.data['data'];
     const data ={
@@ -23,19 +23,31 @@ class App extends Component  {
     emailweb: optios[0].email_web,
     phoneweb:optios[0].phone_web,
     facebook: optios[0].facebook,
-    intagram: optios[0].instagram,
+    instagram: optios[0].instagram,
     youtube: optios[0].youtube,
     }
 
     this.props.updateoption(data);
   })
+
+  await Api.get('api/penerima')
+        .then(res => {
+          const penerimas = res.data['data'];
+          this.props.updatepenerima(penerimas);
+        })
+
+        await Api.get('api/donasi')
+        .then(res => {
+          const donasis = res.data['data'];
+          this.props.updatedonasi(donasis);
+        })
  // document.addEventListener("contextmenu", function(e){e.preventDefault();}, false);
 }
 
 
 
   render(){
-  console.log(this.props.option)
+
   return (
     <Mainrouter />
   );
@@ -45,7 +57,9 @@ class App extends Component  {
 
 const mapDipatchToprops = (dispatch) =>{
 return{
-  updateoption: (data) => dispatch({type:'UPDATEOPTION',data:data}),
+  updateoption: (data) => dispatch({type:'UPDATEOPTION',dataoptions:data}),
+  updatepenerima: (data) => dispatch({type:'UPDATEPENERIMA',datapenerimas:data}),
+  updatedonasi: (data) => dispatch({type:'UPDATEDONASI',datadonasis:data}),
 }
 }
 

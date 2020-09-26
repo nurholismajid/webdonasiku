@@ -6,7 +6,13 @@ import swal from 'sweetalert';
 import Navbar from '../navbar';
 import Menu from '../menu'; 
 import "./home.css";
-class home extends Component {
+import { EditorState, convertToRaw, convertFromHTML, ContentState } from 'draft-js';
+import { Editor } from 'react-draft-wysiwyg';
+import draftToHtml from 'draftjs-to-html';
+import htmlToDraft from 'html-to-draftjs';
+import Media from '../media';
+
+class about extends Component {
     constructor(props) {
         super(props);
         const token = sessionStorage.getItem('token');
@@ -17,22 +23,69 @@ class home extends Component {
         this.state = {
             sliders :[],
             search:'',
-            login
-        }    
+            login,
+        }  
+        
+     
       }
+      
+      
     
+     
     
+      onEditorStateChange = (editorState) => {
+        this.setState({
+          editorState,
+          content:draftToHtml(convertToRaw(editorState.getCurrentContent()))
+        });
+        console.log(this.state.content)
+      };
+
+
     updatefilter(event){
         this.setState({
             search: event.target.value.substr(0,20)
         })
     }
+
+    funswal = (status,pesan,style)=>{
+      swal(status,pesan, style);
+  }
+
+    handleSubmit = (e) => {
+      const Datacontent ={
+        content: this.state.content,
+      }
+   Api.put('content/update/Home',Datacontent)
+      .then(res => {
+        if(res.data.status =="success"){
+            this.funswal(res.data.status,res.data.message,"success");
+        }else{
+            this.funswal(res.data.status, res.data.message, "warning");
+        }
+      })   
+      
+  }
+    
     async componentDidMount() {
         await Api.get('slider/Home')
         .then(res => {
           const sliders = res.data['data'];
           this.setState({ sliders });
         })
+
+        await Api.get('content/Home')
+        .then(res => {
+          const contents = res.data['data'];
+          const sampleMarkup = contents[0].content;
+          const blocksFromHTML = htmlToDraft(sampleMarkup);
+          const editorState = ContentState.createFromBlockArray(blocksFromHTML.contentBlocks, blocksFromHTML.entityMap,);
+          
+          this.setState({ editorState: EditorState.createWithContent(editorState), }); 
+        })
+
+        
+
       }
 
     
@@ -63,9 +116,12 @@ class home extends Component {
         
       }
 
-     
+      
 
     render() {
+
+
+        const { editorState } = this.state;
         if (this.state.login === false) {
             return <Redirect to="/admin/login" />
         }
@@ -118,7 +174,36 @@ class home extends Component {
             <div id="content">
             <div className="inner" >
                 <div className="row">
-                    <div className="col-lg-6">
+                <div className="col-lg-8">
+                    
+                    <div className="panel panel-default">
+                        <div className="panel-heading">
+                            Content
+                        </div>
+                        <div className="panel-body">
+                        <form className="form-horizontal popup-validation">
+                        <div className="form-group">
+                          <div className="col-lg-12">
+                          <Editor
+          editorState={editorState}
+          wrapperClassName="demo-wrapper"
+          editorClassName="demo-editor"
+          onEditorStateChange={this.onEditorStateChange}
+        />
+                          </div>
+                        </div>               
+                        
+                            <div style={{textAlign:"center"}} className="form-actions no-margin-bottom">
+                                <button onClick={this.handleSubmit} type="button" className="btn btn-primary ">Submit</button>
+                            </div>
+                        </form>
+                           
+                        </div>
+                    </div> 
+
+
+                    </div>
+                    <div className="col-lg-4">
 
                     <div className="panel panel-default">
                         <div className="panel-heading">
@@ -126,7 +211,7 @@ class home extends Component {
                         </div>
                         <div className="panel-body">
                             <div className="table-responsive">
-                            <Link className="btn-tambah" to="/admin/page-home/addslider" >
+                            <Link className="btn-tambah" to="/admin/page-about/addslider" >
                             <i className="icon-plus"></i>
                             </Link>
                             <DataTable
@@ -143,6 +228,7 @@ class home extends Component {
 
 
                     </div>
+                    <Media />
                 </div>
                 <hr />
             </div>
@@ -153,4 +239,4 @@ class home extends Component {
 
 }
 
-export default home;
+export default about;

@@ -125,7 +125,7 @@ class addslider extends Component {
                         
                             <div style={{textAlign:"center"}} className="form-actions no-margin-bottom">
                                 <button onClick={this.handleSubmit} type="button" className="btn btn-primary ">Submit</button>
-                                <Link style={{marginLeft:"10px"}} className="btn btn-warning" to="/admin/page-home" >
+                                <Link style={{marginLeft:"10px"}} className="btn btn-warning" to="/admin/page-about" >
                                 Kembali
                                 </Link>
                             </div>

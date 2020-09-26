@@ -3,6 +3,7 @@ import {Redirect, Link} from 'react-router-dom';
 import Api from '../../../services/sevices';
 import swal from 'sweetalert';
 import "./login.css";
+import {connect} from 'react-redux';
 
 class login extends Component {
     constructor(props) {
@@ -61,9 +62,9 @@ class login extends Component {
 
         return (
             <div>
-            <title>{sessionStorage.getItem('nameweb')}</title>
+            <title>{this.props.option.namaweb}</title>
                 <div className="text-center">
-        <img src={sessionStorage.getItem('logoweb')} id="logoimg" alt=" Logo" />
+        <img src={this.props.option.logoweb} id="logoimg" alt=" Logo" />
     </div>
     <div className="tab-content">
         <div id="login" className="tab-pane active">
@@ -92,5 +93,11 @@ class login extends Component {
         );
     }
 }
-
-export default login;
+    const mapStatetoprops=(state)=>{
+      return{
+        option:state.dataoption
+      }
+    }
+    
+    export default connect(mapStatetoprops)(login);
+    

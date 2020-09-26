@@ -1,0 +1,27 @@
+.font-body.font-justify {
+    text-align: center;
+}
+
+.card-angka {
+    box-shadow: 2px 5px #dfe1e5;
+    border: 1px solid #dfe1e5;
+    border-radius: 15px;
+    padding: 10px 52px;
+}
+
+.card-angka h1 {
+    font-weight: 700;
+    font-size: 24px;
+}
+
+.card-angka h4 {
+    text-transform: uppercase;
+    font-weight: bold;
+    font-size:15px;
+}
+
+.card-angka:hover {
+    box-shadow: 10px 15px #dfe1e5;
+    background: #dc8fa9;
+    color: #fff;
+}

@@ -6,15 +6,31 @@ import {createStore} from 'redux';
 import {Provider} from 'react-redux';
 
 const globalState = {
-  dataoption : []
+  dataoption : [],
+  datapenerimas:[],
+  datadonasis:[],
 }
 
 const rootReducer = (state = globalState, action) => {
   
   if(action.type === 'UPDATEOPTION'){
     return{
+      ... state,
+      dataoption:action.dataoptions
+    } 
+  }
 
-      dataoption:action.data
+  if(action.type === 'UPDATEPENERIMA'){
+    return{
+      ... state,
+      datapenerimas:action.datapenerimas
+    } 
+  }
+
+  if(action.type === 'UPDATEDONASI'){
+    return{
+      ... state,
+      datadonasis:action.datadonasis
     } 
   }
   

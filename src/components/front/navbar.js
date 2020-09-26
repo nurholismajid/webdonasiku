@@ -1,15 +1,21 @@
-import React, { useImperativeHandle } from 'react';
+import React, { Component } from 'react';
 import './navbar.css';
 import swal from 'sweetalert';
 import {Redirect, Link } from 'react-router-dom';
+import {connect} from 'react-redux';
+
+class Navbar extends Component  {
+
+  constructor(props) {
+    super(props);
+  
+  }
 
 
-function Navbar(){
-
-    
+  render(){  
     return(
         <div id="top">
-        <title>{sessionStorage.getItem('nameweb')}</title>
+        <title>{this.props.option.namaweb}</title>
 
         <nav className="navbar navbar-inverse navbar-fixed-top " >
         <button id="menu-toggle" data-tooltip="tooltip" className="accordion-toggle btn btn-primary btn-sm visible-xs" data-toggle="collapse" data-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation" >
@@ -18,7 +24,7 @@ function Navbar(){
         <header className="navbar-header">
 
             <Link to="/" className="navbar-brand">
-            <img src={sessionStorage.getItem('logoweb')} alt="" /></Link>
+            <img src={this.props.option.logoweb} alt="" /></Link>
         </header>
         <div className="collapse navbar-collapse" id="navbarTogglerDemo02">
     <ul className="navbar-nav mr-auto mt-2 mt-lg-0">
@@ -55,6 +61,13 @@ function Navbar(){
 
         </div>
     )
+  }
 }
 
-export default Navbar;
+const mapStatetoprops=(state)=>{
+  return{
+    option:state.dataoption
+  }
+}
+
+export default connect(mapStatetoprops)(Navbar);

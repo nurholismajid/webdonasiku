@@ -1,41 +1,45 @@
-import React, { useImperativeHandle } from 'react';
+import React, { Component } from 'react';
 import './navbar.css';
 import swal from 'sweetalert';
 import {Redirect, Link } from 'react-router-dom';
+import {connect} from 'react-redux';
 
-function Handlelogout (){
-    swal("", {
-        title: 'Kamu yakin ingin keluar?',
-        icon: 'warning',
-        buttons: ["Cancel", "Yes!"],
-      }).then(function(value) {
-        if (value) {
-                sessionStorage.removeItem('token');
-                sessionStorage.removeItem('id');
-                sessionStorage.removeItem('nama');
-                sessionStorage.removeItem('email');
-                sessionStorage.removeItem('role');
-                sessionStorage.removeItem('foto');
-            window.location.reload();
-        }
-    });
+class Navbar extends Component {
 
-}
-function Navbar(){
-
-    if(sessionStorage.getItem('role') == 1){
-        var hiddenmenu = {
-            display : "block"
-        }
-    }else{
-        var hiddenmenu = {
-            display : "none"
-        }
-    }
+    Handlelogout (){
+        swal("", {
+            title: 'Kamu yakin ingin keluar?',
+            icon: 'warning',
+            buttons: ["Cancel", "Yes!"],
+          }).then(function(value) {
+            if (value) {
+                    sessionStorage.removeItem('token');
+                    sessionStorage.removeItem('id');
+                    sessionStorage.removeItem('nama');
+                    sessionStorage.removeItem('email');
+                    sessionStorage.removeItem('role');
+                    sessionStorage.removeItem('foto');
+                window.location.reload();
+            }
+        });
     
+    }
+   
+    render(){
+
+        if(sessionStorage.getItem('role') == 1){
+            var hiddenmenu = {
+                display : "block"
+            }
+        }else{
+            var hiddenmenu = {
+                display : "none"
+            }
+        }
+
     return(
         <div id="top">
-        <title>{sessionStorage.getItem('nameweb')}</title>
+        <title>{this.props.option.namaweb}</title>
 
 
     <nav className="navbar navbar-inverse navbar-fixed-top " >
@@ -45,7 +49,7 @@ function Navbar(){
         <header className="navbar-header">
 
         <Link to="/" className="navbar-brand">
-            <img src={sessionStorage.getItem('logoweb')} alt="" /></Link>
+            <img src={this.props.option.logoweb} alt="" /></Link>
         </header>
         <ul className="nav navbar-top-links navbar-right">
             <li className="dropdown">
@@ -59,7 +63,7 @@ function Navbar(){
                     <li style={hiddenmenu} ><Link to="/admin/setting" ><i className="icon-gear"></i> Settings </Link>
                     </li>
                     <li className="divider"></li>
-                    <li><a onClick={()=>Handlelogout()} href="#"><i className="icon-signout"></i> Logout </a>
+                    <li><a onClick={()=>this.Handlelogout()} href="#"><i className="icon-signout"></i> Logout </a>
                     </li>
                 </ul>
 
@@ -71,5 +75,13 @@ function Navbar(){
 </div>
     )
 }
+}
 
-export default Navbar;
+const mapStatetoprops=(state)=>{
+    return{
+      option:state.dataoption
+    }
+  }
+  
+  export default connect(mapStatetoprops)(Navbar);
+  
