@@ -4,9 +4,13 @@ import Footer from "../../footer";
 import Content from "../../content";
 import Slider from "../../slider";
 import Sectionangka from "./sectionangka";
+import Sliderpenerima from "./sectionpenerima";
+import Sliderartikel from "./sectionartikel";
+import Sliderdokumentasi from "./sectiondokumentasi";
 import Api from '../../../../services/sevices';
 import './home.css';
 import {connect} from 'react-redux';
+import sliderdokumentasi from './sectiondokumentasi';
 class home extends Component {
     constructor(props) {
         super(props);
@@ -36,6 +40,9 @@ class home extends Component {
             <Slider sliders = {this.state.sliders}/>
             <Content  content = {this.state.content} />
             <Sectionangka penerimas = {this.props.penerimas} donasis = {this.props.donasis}  />
+            <Sliderpenerima />
+            <Sliderartikel />
+            <Sliderdokumentasi />
             <Footer />
             </div>
         );
